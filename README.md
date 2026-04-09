@@ -59,20 +59,71 @@ Project2/
 
 ## Setup
 
-### 1. Clone the repo to Google Drive
+### Option A: Google Colab
 
-```python
-# In a Colab cell:
-from google.colab import drive
-drive.mount('/content/drive')
-!git clone https://github.com/sophie99zyq/NTU-AdvancedCV-Project2.git /content/drive/MyDrive/Project2
+1. Open any notebook in Colab and **Run All**. The first cell will automatically:
+   - `git clone` this repo to `/content/Project2`
+   - Clone the [pytorch-CycleGAN-and-pix2pix](https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix) repo
+   - Mount Google Drive (for saving results only)
+
+2. Set `FAST_TEST = True` first to verify everything works (~5 min), then `FAST_TEST = False` for full training.
+
+### Option B: Server / Local Machine
+
+1. **Clone the repo and install dependencies:**
+
+```bash
+git clone https://github.com/sophie99zyq/NTU-AdvancedCV-Project2.git
+cd NTU-AdvancedCV-Project2
+pip install torch torchvision matplotlib visdom dominate pillow
+git clone https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix.git
 ```
 
-### 2. Run notebooks
+2. **Modify the first cell of each notebook** before running:
 
-Open any notebook in Colab and **Run All**:
+```python
+# Remove or comment out these Colab-specific lines:
+# from google.colab import drive
+# drive.mount('/content/drive')
+
+# Change paths to match your local setup:
+import sys
+sys.path.insert(0, '/path/to/NTU-AdvancedCV-Project2')  # project root
+
+# Change SAVE_DIR to a local path (originally saves to Google Drive):
+SAVE_DIR = '/path/to/NTU-AdvancedCV-Project2/results/xxx'
+```
+
+3. **Path substitution cheat sheet** — replace these Colab paths throughout the notebook:
+
+| Colab path | Server equivalent |
+|---|---|
+| `/content/Project2` | your cloned repo root |
+| `/content/drive/MyDrive/Project2/results/...` | `<repo>/results/...` |
+| `/content/cyclegan_data/...` | `<repo>/cyclegan_data/...` (or any local dir) |
+| `/content/spectral_data/...` | `<repo>/spectral_data/...` |
+| `/content/spectral_reconstructed/...` | `<repo>/spectral_reconstructed/...` |
+
+4. **Run notebooks** with Jupyter:
+
+```bash
+pip install jupyter
+jupyter notebook notebooks/
+```
+
+Or convert to a Python script and run directly:
+
+```bash
+jupyter nbconvert --to script notebooks/mnist_usps.ipynb
+python notebooks/mnist_usps.py
+```
+
+### Notes
+
 - Set `FAST_TEST = True` first to verify everything works (~5 min)
 - Then set `FAST_TEST = False` for full training
+- GPU is strongly recommended — training CycleGAN on CPU is very slow
+- MNIST, USPS, and SVHN are auto-downloaded by torchvision; the three object datasets are in `data/`
 
 Each notebook produces:
 - Task I: side-by-side style transfer visualizations
