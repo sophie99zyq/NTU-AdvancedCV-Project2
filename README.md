@@ -30,7 +30,7 @@ Compares image style transfer in spatial vs. spectral space and benchmarks 5 uns
 | 4 | Art → Real World (Office-Home) | 65 | ResNet-50 |
 | 5 | Photo → Sketch (PACS) | 7 | ResNet-50 |
 
-MNIST, USPS, and SVHN are auto-downloaded by torchvision. Office-31 and PACS are included in `data/`. Office-Home must be downloaded separately (see Setup below).
+MNIST, USPS, and SVHN are auto-downloaded by torchvision. All three object datasets are included in `data/` (Office-Home is sampled to 50% per class to fit GitHub size limits).
 
 ## Project Structure
 
@@ -53,6 +53,7 @@ Project2/
 │   └── eval_utils.py             # Save/load results as JSON
 └── data/
     ├── office31/                 # Included (87 MB)
+    ├── office_home/              # Included, sampled 50% (470 MB)
     └── pacs/                     # Included (202 MB)
 ```
 
@@ -67,18 +68,7 @@ drive.mount('/content/drive')
 !git clone https://github.com/sophie99zyq/NTU-AdvancedCV-Project2.git /content/drive/MyDrive/Project2
 ```
 
-### 2. Download Office-Home (not included, 1.1 GB)
-
-Download from [Office-Home official page](https://www.hemanthdv.org/officeHomeDataset.html) and place in Google Drive so the structure is:
-```
-MyDrive/Project2/data/office_home/
-├── Art/
-├── Clipart/
-├── Product/
-└── Real World/
-```
-
-### 3. Run notebooks
+### 2. Run notebooks
 
 Open any notebook in Colab and **Run All**:
 - Set `FAST_TEST = True` first to verify everything works (~5 min)
